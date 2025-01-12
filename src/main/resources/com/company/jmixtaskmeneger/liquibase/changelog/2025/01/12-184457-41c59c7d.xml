@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="JmixTaskMeneger">
+        <createTable tableName="ASSIGNEE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ASSIGNEE"/>
+            </column>
+            <column name="USERNAME" type="VARCHAR(255)"/>
+            <column name="PHONE" type="VARCHAR(255)"/>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="JmixTaskMeneger">
+        <createTable tableName="PROJECT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PROJECT"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="JmixTaskMeneger">
+        <createTable tableName="TASK_">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TASK_"/>
+            </column>
+            <column name="TITLE" type="VARCHAR(255)"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="DUE_DATE" type="DATE"/>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+            <column name="ASSIGNEE_ID" type="UUID"/>
+            <column name="PROJECT_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="JmixTaskMeneger">
+        <createIndex indexName="IDX_TASK__ASSIGNEE" tableName="TASK_">
+            <column name="ASSIGNEE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ASSIGNEE_ID" baseTableName="TASK_"
+                                 constraintName="FK_TASK__ON_ASSIGNEE" referencedColumnNames="ID"
+                                 referencedTableName="ASSIGNEE"/>
+    </changeSet>
+    <changeSet id="5" author="JmixTaskMeneger">
+        <createIndex indexName="IDX_TASK__PROJECT" tableName="TASK_">
+            <column name="PROJECT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PROJECT_ID" baseTableName="TASK_" constraintName="FK_TASK__ON_PROJECT"
+                                 referencedColumnNames="ID" referencedTableName="PROJECT"/>
+    </changeSet>
+</databaseChangeLog>
